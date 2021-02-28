@@ -157,7 +157,6 @@ def close_account(db, user):
 def call_interface(db):
     main_menu = ["1. Create an account", "2. Log into account", "0. Exit"]
     account_menu = ["1. Balance", "2. Add income", "3. Do transfer", "4. Close account", "5. Log out", "0. Exit"]
-    logged_in = False
     user = Account()
     while True:
         if not user.number:
