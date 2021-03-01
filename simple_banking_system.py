@@ -35,17 +35,16 @@ def generate_number():
     # random card number generation
     remainder = "".join(random.choice(numbers) for _ in range(9))
     number = IIN + remainder
-    while number in used_card_numbers:
-        remainder = "".join(random.choice(numbers) for _ in range(9))
-        number = IIN + remainder
-
     number += "0"
     checksum = luhn_algorithm(number)
     if checksum:
         number = number[:-1] + checksum
-    used_card_numbers.append(number)
 
-    return number
+    db.cur.execute(f'SELECT number FROM card WHERE number="{number}"')
+    if cur.fetchone():
+        return generate_number(db)  # regenerate number if it was found in existing numbers
+    else:
+        return number
 
 
 def luhn_algorithm(number):
